@@ -1,0 +1,4 @@
+/* Tailwind replaces the majority of custom CSS. Keeping only utility helpers if needed. */
+.sr-only {
+  @apply sr-only;
+}
