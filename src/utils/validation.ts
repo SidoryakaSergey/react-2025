@@ -22,7 +22,10 @@ export const formSchema = z
     name: z
       .string()
       .min(1, 'Name is required')
-      .regex(/^[A-Z][\p{L}\p{M}'\-\s]*$/u, 'Should start with an uppercase letter'),
+      .regex(
+        /^[A-Z][\p{L}\p{M}'\-\s]*$/u,
+        'Should start with an uppercase letter'
+      ),
     age: z
       .string()
       .min(1, 'Age is required')
@@ -31,7 +34,7 @@ export const formSchema = z
           const num = Number(val);
           return !isNaN(num) && num >= 0;
         },
-        { message: 'Age must be a positive number' },
+        { message: 'Age must be a positive number' }
       ),
     email: z.string().email('Invalid email'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
@@ -52,7 +55,6 @@ export const formSchema = z
     path: ['password'],
   });
 
-// Используем z.input и z.output для правильной типизации
 export type FormInput = z.input<typeof formSchema>;
 export type FormSchema = z.output<typeof formSchema>;
 

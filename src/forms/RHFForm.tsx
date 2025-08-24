@@ -52,7 +52,7 @@ export function RHFForm({ onSuccess }: Props) {
     addEntry({
       id: crypto.randomUUID(),
       name: data.name,
-      age: Number(data.age), // Преобразуем строку в число
+      age: Number(data.age),
       email: data.email,
       password: data.password,
       gender: data.gender,

@@ -3,7 +3,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   css: {
@@ -32,7 +31,7 @@ export default defineConfig({
         'vitest.setup.ts',
       ],
       include: ['src/**/*.{ts,tsx}'],
-      // Пороги покрытия согласно ТЗ
+
       thresholds: {
         statements: 80,
         branches: 80,

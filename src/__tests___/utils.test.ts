@@ -66,13 +66,13 @@ describe('utils', () => {
 
     it('rejects file that is too large', () => {
       const largeFile = new File(['x'], 'test.png', { type: 'image/png' });
-      Object.defineProperty(largeFile, 'size', { value: 3 * 1024 * 1024 }); // 3MB
+      Object.defineProperty(largeFile, 'size', { value: 3 * 1024 * 1024 });
       expect(validateImage(largeFile)).toContain('File size must be <= 2MB');
     });
 
     it('accepts file at size limit', () => {
       const file = new File(['x'], 'test.png', { type: 'image/png' });
-      Object.defineProperty(file, 'size', { value: 2 * 1024 * 1024 }); // exactly 2MB
+      Object.defineProperty(file, 'size', { value: 2 * 1024 * 1024 });
       expect(validateImage(file)).toBeNull();
     });
   });
