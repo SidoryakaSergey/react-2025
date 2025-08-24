@@ -1,59 +1,45 @@
 import js from '@eslint/js';
-import ts from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import tseslint from 'typescript-eslint';
-import tsParser from '@typescript-eslint/parser';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginPrettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
+import tseslint from 'typescript-eslint';
+import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
+import reactCompiler from 'eslint-plugin-react-compiler';
 
-export default [
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-
+export default tseslint.config(
+  { ignores: ['dist'] },
   {
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.strict,
+      eslintPluginPrettier,
+    ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 2022,
-      sourceType: 'module',
+      ecmaVersion: 2020,
       globals: globals.browser,
     },
     plugins: {
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      '@typescript-eslint': ts,
-      prettier: eslintPluginPrettier,
+      'react-compiler': reactCompiler,
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': 'error',
-      '@typescript-eslint/no-explicit-any': 'error',
-      'no-debugger': 'off',
-      'no-console': 'off',
-      'class-methods-use-this': 'off',
-      'catch-error-name': 'off',
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['error', { allowConstantExport: true }],
-      'react/self-closing-comp': [
-        'error',
-        {
-          component: true,
-          html: true,
-        },
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
       ],
-      'react-hooks/exhaustive-deps': 'off',
-      'prettier/prettier': 'error',
-      ...eslintConfigPrettier.rules,
+      'react-compiler/react-compiler': 'error',
+      ...react.configs.recommended.rules,
+      ...react.configs['jsx-runtime'].rules,
     },
-    linterOptions: {
-      noInlineConfig: true,
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
-  },
-  eslintConfigPrettier,
-  {
-    ignores: ['dist'],
-  },
-];
+  }
+);
